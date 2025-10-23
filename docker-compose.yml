@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend/database.db:/app/database.db
+    environment:
+      - PORT=3000
+      - REFETCH_MECHANISM=cron
+      - DATABASE_TYPE=${DATABASE_TYPE:-sqlite}
+      - DATABASE_PATH=/app/database.db
+      - POSTGRES_USER=${POSTGRES_USER:-user}
+      - POSTGRES_HOST=postgres
+      - POSTGRES_DB=${POSTGRES_DB:-feed_reader}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password}
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+    depends_on:
+      - postgres
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-user}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password}
+      - POSTGRES_DB=${POSTGRES_DB:-feed_reader}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-gray-100 text-gray-800;
+  }
+}
+
+@layer components {
+  .sidebar {
+    @apply w-72 bg-gray-800 text-gray-100 flex flex-col;
+  }
+
+  .feed-list-item {
+    @apply px-4 py-2 rounded-md cursor-pointer transition-colors duration-200;
+  }
+
+  .feed-list-item:hover {
+    @apply bg-gray-700;
+  }
+
+  .feed-list-item.selected {
+    @apply bg-gray-900;
+  }
+
+  .article {
+    @apply bg-white p-6 rounded-lg shadow-md transition-opacity duration-500;
+    opacity: 0;
+  }
+
+  .article.loaded {
+    opacity: 1;
+  }
+
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+
+  .custom-scrollbar:hover {
+    scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(156, 163, 175, 0.5);
+  }
+}
