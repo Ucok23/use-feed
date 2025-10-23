@@ -36,6 +36,10 @@ jobs:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
+          tags: |
+            ghcr.io/${{ env.REPO_NAME }}/backend:latest
+            ghcr.io/${{ env.REPO_NAME }}/backend:${{ github.sha }}
+
       - name: Build and push frontend image
         uses: docker/build-push-action@v4
         with:
