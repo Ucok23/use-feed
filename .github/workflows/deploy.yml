@@ -26,22 +26,22 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Set repository name lowercase
+        id: repo_name
+        run: echo "REPO_NAME=$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - name: Build and push backend image
         uses: docker/build-push-action@v4
         with:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
-          tags:
-            - ghcr.io/${{ github.repository | lower }}/backend:latest
-            - ghcr.io/${{ github.repository | lower }}/backend:${{ github.sha }}
-
       - name: Build and push frontend image
         uses: docker/build-push-action@v4
         with:
           context: ./frontend
           file: ./frontend/Dockerfile
           push: true
-          tags:
-            - ghcr.io/${{ github.repository | lower }}/frontend:latest
-            - ghcr.io/${{ github.repository | lower }}/frontend:${{ github.sha }}
+          tags: |
+            ghcr.io/${{ env.REPO_NAME }}/frontend:latest
+            ghcr.io/${{ env.REPO_NAME }}/frontend:${{ github.sha }}
